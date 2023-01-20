@@ -1,0 +1,39 @@
+name: dexter_cart
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies:
+  animation_wrappers: ^3.0.0
+  cached_network_image: ^3.2.3
+  cupertino_icons: ^1.0.2
+  firebase_auth: ^4.2.5
+  firebase_core: ^2.4.1
+  flutter:
+    sdk: flutter
+  # flutter_facebook_login: ^3.0.0
+  geolocation: ^1.1.2
+  get: ^4.6.5
+  go_router: ^6.0.1
+  image_picker: ^0.8.6
+  intl: ^0.17.0
+  path_provider: ^2.0.11
+  rive: ^0.10.1
+  shared_preferences: ^2.0.16
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  # assets:
+  #   - images/abc.png
+  #
+
