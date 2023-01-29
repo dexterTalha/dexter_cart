@@ -11,6 +11,7 @@ environment:
 dependencies:
   animation_wrappers: ^3.0.0
   cached_network_image: ^3.2.3
+  country_picker: ^2.0.19
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.2.5
   firebase_core: ^2.4.1
@@ -42,4 +43,3 @@ flutter:
         - asset: assets/font/Roboto-Medium.ttf
         - asset: assets/font/Roboto-Bold.ttf
         - asset: assets/font/Roboto-Black.ttf
-

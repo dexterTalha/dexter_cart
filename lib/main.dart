@@ -1,3 +1,4 @@
+import 'package:dexter_cart/screens/login_screen.dart';
 import 'package:dexter_cart/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
+      home: LoginScreen(),
     );
   }
 }
