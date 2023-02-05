@@ -43,3 +43,7 @@ flutter:
         - asset: assets/font/Roboto-Medium.ttf
         - asset: assets/font/Roboto-Bold.ttf
         - asset: assets/font/Roboto-Black.ttf
+flutter_assets:
+  assets_path: assets/image
+  output_path: lib/utils/
+  filename: images.dart
