@@ -18,6 +18,7 @@ class MyTextField extends StatelessWidget {
   final TextInputType? inputType;
   final TextStyle? style;
   final bool isReadOnly;
+  final String? Function(String?)? validator;
 
   const MyTextField({
     super.key,
@@ -36,6 +37,7 @@ class MyTextField extends StatelessWidget {
     this.inputType = TextInputType.text,
     this.style,
     this.isReadOnly = false,
+    this.validator,
   });
 
   @override
@@ -57,9 +59,8 @@ class MyTextField extends StatelessWidget {
           cursorColor: MyTheme.primary,
           onTap: onTap,
           readOnly: isReadOnly,
-          style: style ??
-              const TextStyle(
-                  color: MyTheme.primary, fontSize: 18, fontFamily: "Roboto"),
+          validator: validator,
+          style: style ?? const TextStyle(color: MyTheme.primary, fontSize: 18, fontFamily: "Roboto"),
           keyboardType: inputType,
           decoration: InputDecoration(
             hintText: hint,

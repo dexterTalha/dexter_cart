@@ -25,6 +25,8 @@ dependencies:
   path_provider: ^2.0.11
   rive: ^0.10.1
   shared_preferences: ^2.0.16
+  awesome_snackbar_content: ^0.1.0
+  pinput: ^2.2.23
 
 dev_dependencies:
   flutter_lints: ^2.0.0

@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:dexter_cart/screens/login_screen.dart';
 import 'package:dexter_cart/utils/image_url.dart';
+import 'package:dexter_cart/utils/my_routes.dart';
 import 'package:dexter_cart/utils/my_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart' as riv;
 
 class SplashScreen extends StatefulWidget {
@@ -16,11 +19,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
-    });
     super.initState();
+    Timer(const Duration(seconds: 3), () {
+      GoRouter.of(context).goNamed(MyRoutes.login);
+    });
   }
 
   @override
