@@ -91,6 +91,7 @@ class ImageUrl {
   static const String assetsImageWallet = "assets/image/wallet.png";
   static const String assetsImageWarning = "assets/image/warning.png";
   static const String assetsImageYoutube = "assets/image/youtube.png";
+  static const String assetsSignUp = "assets/image/sign_up.png";
 }
 
 class RiveUrl {

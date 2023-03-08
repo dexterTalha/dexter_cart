@@ -1,4 +1,6 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:dexter_cart/auth/auth_controller.dart';
+
 import 'package:dexter_cart/components/button_widget.dart';
 import 'package:dexter_cart/components/image_button.dart';
 import 'package:dexter_cart/components/my_text.dart';
@@ -8,6 +10,7 @@ import 'package:dexter_cart/utils/image_url.dart';
 import 'package:dexter_cart/utils/my_theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../utils/my_routes.dart';
@@ -24,6 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _phoneController = TextEditingController();
   Country? selectedCountry;
   bool isTermsAccepted = false;
+  String code = "";
+  final AuthController _authController = AuthController.instance;
   final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -95,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onSelect: (Country country) {
                           print('Select country: ${country.flagEmoji}');
                           _countryController.text = "${country.flagEmoji} ${country.name}(+${country.phoneCode})";
+                          code = country.phoneCode;
                         },
                       );
                     },
@@ -165,30 +171,41 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Hero(
-                      tag: "login_btn",
-                      child: MyButton(
-                        onTap: () {
-                          // if (_formKey.currentState == null) {
-                          //   return;
-                          // }
-                          // if (!_formKey.currentState!.validate()) {
-                          //   return;
-                          // }
-                          context.goNamed(MyRoutes.otpScreen);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: MyTheme.primary,
-                          padding: const EdgeInsets.symmetric(vertical: 13),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                    child: Obx(
+                      () => Visibility(
+                        visible: _authController.isCodeSending.value,
+                        replacement: Hero(
+                          tag: "login_btn",
+                          child: MyButton(
+                            onTap: () async {
+                              if (_formKey.currentState == null) {
+                                return;
+                              }
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              String mobileNumber = "+$code${_phoneController.text.trim()}";
+
+                              await _authController.phoneAuth(context: context, mobileNumber: mobileNumber);
+                              // context.goNamed(otpScreen);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: MyTheme.primary,
+                              padding: const EdgeInsets.symmetric(vertical: 13),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              shadowColor: MyTheme.primaryLight,
+                              elevation: 12,
+                            ),
+                            child: const MyText(
+                              "Next",
+                              textStyle: TextStyle(color: Colors.white, fontSize: 18),
+                            ),
                           ),
-                          shadowColor: MyTheme.primaryLight,
-                          elevation: 12,
                         ),
-                        child: const MyText(
-                          "Next",
-                          textStyle: TextStyle(color: Colors.white, fontSize: 18),
+                        child: const Center(
+                          child: CircularProgressIndicator(),
                         ),
                       ),
                     ),

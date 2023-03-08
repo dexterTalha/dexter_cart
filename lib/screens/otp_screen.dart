@@ -1,4 +1,5 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:dexter_cart/auth/auth_controller.dart';
 import 'package:dexter_cart/utils/my_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -9,7 +10,8 @@ import '../components/my_text.dart';
 import '../utils/my_theme.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  final String? mobile;
+  const OtpScreen({this.mobile, super.key});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -19,6 +21,7 @@ class _OtpScreenState extends State<OtpScreen> {
   final pinController = TextEditingController();
   final focusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
+  final AuthController _authController = AuthController.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -94,16 +97,27 @@ class _OtpScreenState extends State<OtpScreen> {
                 listenForMultipleSmsOnAndroid: true,
 
                 defaultPinTheme: defaultPinTheme,
-                validator: (value) {
-                  return value == '2222' ? null : 'Pin is incorrect';
-                },
+//                 validator: (value) async{
+//                   if(value.isNotEmpty && value.length < 6){
+//                     return await _authController.verifyOtp(context: context, smsCode: value!)
+// }
+// return 'Enter OTP';
+//                 },
                 // onClipboardFound: (value) {
                 //   debugPrint('onClipboardFound: $value');
                 //   pinController.setText(value);
                 // },
                 hapticFeedbackType: HapticFeedbackType.lightImpact,
-                onCompleted: (pin) {
+                onCompleted: (pin) async {
                   debugPrint('onCompleted: $pin');
+                  if (pin.isNotEmpty && pin.length == 6) {
+                    String? value = await _authController.verifyOtp(context: context, smsCode: pin);
+                    if (value == null && context.mounted) {
+                      context.goNamed(signUp);
+                    } else {
+                      print(value);
+                    }
+                  }
                 },
                 onChanged: (value) {
                   debugPrint('onChanged: $value');
@@ -142,37 +156,15 @@ class _OtpScreenState extends State<OtpScreen> {
             Hero(
               tag: "login_btn",
               child: MyButton(
-                onTap: () {
-                  context.goNamed(MyRoutes.signUp);
-                  // final snackBar = SnackBar(
-                  //   /// need to set following properties for best effect of awesome_snackbar_content
-                  //   elevation: 0,
-
-                  //   behavior: SnackBarBehavior.floating,
-                  //   backgroundColor: Colors.transparent,
-                  //   dismissDirection: DismissDirection.horizontal,
-
-                  //   duration: const Duration(seconds: 2),
-                  //   content: AwesomeSnackbarContent(
-                  //     title: 'On Snap!',
-                  //     message: 'This is an example error message that will be shown in the body of snackbar!',
-
-                  //     /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                  //     contentType: ContentType.help,
-                  //   ),
-                  //   margin: EdgeInsets.only(
-                  //     bottom: MediaQuery.of(context).size.height - 190,
-                  //     right: 1,
-                  //     left: 60,
-                  //   ),
-                  // );
-
-                  // ScaffoldMessenger.of(context)
-                  //   ..hideCurrentSnackBar()
-                  //   ..showSnackBar(snackBar);
+                onTap: () async {
+                  if (widget.mobile == null) {
+                    context.goNamed(login);
+                    return;
+                  }
+                  await _authController.resendOTP(context, widget.mobile!);
                 },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text("Resend"),
                 ),
               ),
