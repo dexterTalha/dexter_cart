@@ -5,15 +5,11 @@ import 'package:dexter_cart/components/button_widget.dart';
 import 'package:dexter_cart/components/image_button.dart';
 import 'package:dexter_cart/components/my_text.dart';
 import 'package:dexter_cart/components/my_text_field.dart';
-import 'package:dexter_cart/screens/otp_screen.dart';
 import 'package:dexter_cart/utils/image_url.dart';
 import 'package:dexter_cart/utils/my_theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
-
-import '../utils/my_routes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -37,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           height: double.maxFinite,
           width: double.maxFinite,
           child: SingleChildScrollView(

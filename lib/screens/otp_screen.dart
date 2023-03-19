@@ -112,7 +112,13 @@ class _OtpScreenState extends State<OtpScreen> {
                   if (pin.isNotEmpty && pin.length == 6) {
                     String? value = await _authController.verifyOtp(context: context, smsCode: pin);
                     if (value == null && context.mounted) {
-                      context.goNamed(signUp);
+                      String nextPage = signUp;
+                      if (await _authController.checkUserExists(_authController.user?.uid ?? "")) {
+                        nextPage = home;
+                      }
+                      if (context.mounted) {
+                        context.goNamed(nextPage);
+                      }
                     } else {
                       print(value);
                     }

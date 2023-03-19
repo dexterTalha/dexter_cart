@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:dexter_cart/screens/login_screen.dart';
+import 'package:dexter_cart/auth/auth_controller.dart';
 import 'package:dexter_cart/utils/image_url.dart';
 import 'package:dexter_cart/utils/my_routes.dart';
 import 'package:dexter_cart/utils/my_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart' as riv;
 
@@ -20,8 +19,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-      context.goNamed(login);
+    Timer(const Duration(seconds: 3), () async {
+      AuthController controller = AuthController.instance;
+      if (controller.user != null) {
+        if (await controller.checkUserExists()) {
+          if (context.mounted) {
+            context.goNamed(home);
+          }
+        } else {
+          if (context.mounted) context.goNamed(login);
+        }
+      } else {
+        context.goNamed(login);
+      }
     });
   }
 

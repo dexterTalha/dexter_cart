@@ -18,7 +18,7 @@ final router = GoRouter(
     GoRoute(
       path: home,
       name: home,
-      builder: (context, state) => HomeScreen(),
+      builder: (context, state) => const HomeScreen(),
       redirect: (context, state) {
         if (AuthController.instance.user == null) {
           return login;
@@ -29,12 +29,12 @@ final router = GoRouter(
     GoRoute(
       path: splash,
       name: splash,
-      builder: (context, state) => SplashScreen(),
+      builder: (context, state) => const SplashScreen(),
     ),
     GoRoute(
       path: "/auth",
       name: login,
-      builder: (context, state) => LoginScreen(),
+      builder: (context, state) => const LoginScreen(),
       routes: [
         GoRoute(
           path: 'otp_verification/:mobile',
@@ -47,7 +47,7 @@ final router = GoRouter(
         GoRoute(
           path: signUp,
           name: signUp,
-          builder: (context, state) => SignUpScreen(),
+          builder: (context, state) => const SignUpScreen(),
         ),
       ],
     ),
