@@ -43,7 +43,7 @@ class AuthController extends GetxController {
       codeSent: (String verificationId, int? resendToken) {
         this.verificationId = verificationId;
         this.resendToken = resendToken;
-        context.goNamed(otpScreen, params: {'mobile': mobileNumber});
+        context.goNamed(otpScreen, queryParameters: {'mobile': mobileNumber});
         isCodeSending(false);
       },
       codeAutoRetrievalTimeout: (String verificationId) {

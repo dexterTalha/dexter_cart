@@ -40,7 +40,7 @@ final router = GoRouter(
           path: 'otp_verification/:mobile',
           name: otpScreen,
           builder: (context, state) {
-            String mobile = state.params['mobile'] ?? "";
+            String mobile = state.queryParameters['mobile'] ?? "";
             return OtpScreen(mobile: mobile);
           },
         ),
